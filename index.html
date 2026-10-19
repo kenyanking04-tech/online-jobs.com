@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DropShip Hub · pay to get the job</title>
+  <!-- Font & icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f6f9fc;
+      color: #0b1b2b;
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    /* realistic shadows & smooth edges */
+    .app-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* HEADER & NAV */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 14px 28px;
+      box-shadow: 0 10px 25px -8px rgba(0, 20, 40, 0.12), 0 2px 6px rgba(0,0,0,0.02);
+      margin-bottom: 28px;
+      backdrop-filter: blur(2px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #0f2b3d;
+    }
+
+    .logo i {
+      color: #1e88e5;
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      font-weight: 500;
+      color: #3a5468;
+    }
+
+    .nav-links span {
+      cursor: default;
+      transition: color 0.1s;
+    }
+
+    .nav-links span:hover {
+      color: #1e88e5;
+    }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #eef4fc;
+      padding: 6px 16px 6px 12px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .user-badge i {
+      font-size: 1.2rem;
+      color: #1e88e5;
+    }
+
+    .credit-pill {
+      background: #ffffff;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #0f2b3d;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .credit-pill i {
+      font-size: 0.9rem;
+      color: #f5b342;
+    }
+
+    /* HERO / WELCOME */
+    .hero {
+      background: linear-gradient(135deg, #0b1f2f 0%, #12344a 100%);
+      border-radius: 32px;
+      padding: 40px 44px;
+      color: white;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 35px -10px rgba(0, 20, 30, 0.3);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #b8d0e2;
+      font-size: 1.05rem;
+      max-width: 550px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      background: rgba(255,255,255,0.08);
+      padding: 16px 28px;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #a0bed6;
+    }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .filter-left {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .filter-chip {
+      background: white;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #1f3e55;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      border: 1px solid #dbe7f0;
+      cursor: default;
+      transition: all 0.15s;
+    }
+
+    .filter-chip.active {
+      background: #0b1f2f;
+      color: white;
+      border-color: #0b1f2f;
+      box-shadow: 0 8px 16px -6px #0b1f2f40;
+    }
+
+    .filter-chip i {
+      margin-right: 6px;
+    }
+
+    .search-box {
+      background: white;
+      padding: 6px 8px 6px 20px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      border: 1px solid #dbe7f0;
+    }
+
+    .search-box i {
+      color: #7e9bb5;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      width: 220px;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .search-box button {
+      background: #1e88e5;
+      border: none;
+      color: white;
+      font-weight: 500;
+      padding: 8px 20px;
+      border-radius: 40px;
+      cursor: default;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* JOB GRID */
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+
+    .job-card {
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 12px 28px -12px rgba(0, 20, 30, 0.08), 0 4px 12px rgba(0,0,0,0.02);
+      transition: transform 0.15s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(220, 235, 245, 0.7);
+    }
+
+    .job-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 36px -16px rgba(0, 30, 50, 0.18);
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .job-icon {
+      background: #e6f0fa;
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #1e88e5;
+    }
+
+    .job-badge {
+      background: #eaf7ee;
+      color: #146b3a;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 30px;
+      letter-spacing: 0.02em;
+    }
+
+    .job-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 12px 0 6px;
+      letter-spacing: -0.01em;
+      color: #0d2538;
+    }
+
+    .job-company {
+      font-size: 0.9rem;
+      color: #5f7d95;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .job-company i {
+      font-size: 0.75rem;
+      color: #7e9bb5;
+    }
+
+    .job-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: #42627a;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .job-meta span i {
+      margin-right: 4px;
+      color: #1e88e5;
+      width: 16px;
+    }
+
+    .job-price {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #0b1f2f;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .job-price small {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: #6688a0;
+    }
+
+    .pay-btn {
+      background: #0b1f2f;
+      color: white;
+      border: none;
+      padding: 14px 0;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+      letter-spacing: 0.01em;
+      box-shadow: 0 6px 14px -6px rgba(11,31,47,0.3);
+    }
+
+    .pay-btn:hover {
+      background: #1e3b53;
+    }
+
+    .pay-btn:active {
+      transform: scale(0.98);
+    }
+
+    .pay-btn i {
+      font-size: 0.9rem;
+      color: #b8d0e2;
+    }
+
+    /* PAYMENT MODAL (realistic overlay) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(8, 22, 36, 0.65);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .payment-modal {
+      background: #ffffff;
+      max-width: 460px;
+      width: 90%;
+      border-radius: 40px;
+      padding: 32px 32px 28px;
+      box-shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+      transform: scale(0.96);
+      transition: transform 0.2s ease;
+    }
+
+    .modal-overlay.active .payment-modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: #7e9bb5;
+      line-height: 1;
+      padding: 0 6px;
+    }
+
+    .modal-job-title {
+      background: #f0f7fe;
+      padding: 14px 18px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      font-weight: 600;
+      color: #0b1f2f;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-job-title i {
+      color: #1e88e5;
+      font-size: 1.2rem;
+    }
+
+    .price-breakdown {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      font-size: 0.95rem;
+      color: #3a5468;
+    }
+
+    .price-breakdown.total {
+      border-top: 1px dashed #cbdae6;
+      margin-top: 8px;
+      padding-top: 18px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #0b1f2f;
+    }
+
+    .fee-note {
+      font-size: 0.8rem;
+      color: #7c94a8;
+      margin-top: 4px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 12px;
+      margin: 22px 0 20px;
+    }
+
+    .method {
+      background: #f1f7fd;
+      border-radius: 16px;
+      padding: 12px 0;
+      flex: 1;
+      text-align: center;
+      border: 2px solid transparent;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #2b4a61;
+      cursor: default;
+      transition: all 0.1s;
+    }
+
+    .method.active {
+      border-color: #1e88e5;
+      background: #e3f0fd;
+      color: #0b1f2f;
+    }
+
+    .method i {
+      margin-right: 8px;
+      font-size: 1rem;
+    }
+
+    .pay-action-btn {
+      background: #0b1f2f;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 16px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      box-shadow: 0 12px 24px -12px #0b1f2f80;
+    }
+
+    .pay-action-btn:hover {
+      background: #133047;
+    }
+
+    .secure-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: #7893a8;
+      letter-spacing: 0.02em;
+    }
+
+    .secure-badge i {
+      font-size: 0.9rem;
+    }
+
+    /* toast */
+    .toast-message {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #0b1f2f;
+      color: white;
+      padding: 14px 32px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      box-shadow: 0 20px 35px -8px #00000050;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 1100;
+      white-space: nowrap;
+    }
+
+    .toast-message.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* footer */
+    .footer-note {
+      text-align: center;
+      padding: 28px 0 12px;
+      color: #7e9bb5;
+      font-size: 0.85rem;
+      border-top: 1px solid #d9e6f0;
+      margin-top: 20px;
+    }
+
+    /* responsive */
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      .navbar { flex-direction: column; gap: 12px; align-items: stretch; }
+      .hero { flex-direction: column; align-items: flex-start; gap: 22px; padding: 28px; }
+      .hero-stats { width: 100%; justify-content: space-around; }
+      .filter-bar { flex-direction: column; align-items: stretch; gap: 14px; }
+      .search-box { width: 100%; }
+      .search-box input { width: 100%; }
+      .job-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fas fa-box-open"></i> DropShipHub
+      </div>
+      <div class="nav-links">
+        <span>Dashboard</span>
+        <span>Jobs</span>
+        <span>My Gigs</span>
+        <span>Earnings</span>
+      </div>
+      <div class="user-badge">
+        <i class="fas fa-user-circle"></i>
+        <span>Alex Rivera</span>
+        <div class="credit-pill">
+          <i class="fas fa-coins"></i> $240
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <h1>Premium drop shipping jobs</h1>
+        <p>Pay a small fee to unlock exclusive orders and start fulfilling immediately. Verified merchants, daily payouts.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">48</span>
+          <span class="stat-label">open jobs</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">$6.2k</span>
+          <span class="stat-label">paid today</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filter-bar">
+      <div class="filter-left">
+        <div class="filter-chip active"><i class="fas fa-fire"></i> Hot</div>
+        <div class="filter-chip"><i class="fas fa-clock"></i> New</div>
+        <div class="filter-chip"><i class="fas fa-tag"></i> Low fee</div>
+        <div class="filter-chip"><i class="fas fa-star"></i> Top rated</div>
+      </div>
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search products, brands...">
+        <button>Filter</button>
+      </div>
+    </div>
+
+    <!-- JOB GRID -->
+    <div class="job-grid" id="jobGrid">
+      <!-- card 1 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-headphones"></i></div>
+          <div class="job-badge"><i class="fas fa-bolt"></i> instant</div>
+        </div>
+        <div class="job-title">Wireless Earbuds · Bulk order</div>
+        <div class="job-company"><i class="fas fa-store"></i> AudioWave Store</div>
+        <div class="job-meta">
+          <span><i class="fas fa-box"></i> 120 units</span>
+          <span><i class="fas fa-truck"></i> 3–5 days</span>
+        </div>
+        <div class="job-price">$45 <small>job fee</small></div>
+        <button class="pay-btn" data-job="Wireless Earbuds" data-fee="45"><i class="fas fa-lock"></i> Pay & get job</button>
+      </div>
+
+      <!-- card 2 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-watch"></i></div>
+          <div class="job-badge"><i class="fas fa-crown"></i> premium</div>
+        </div>
+        <div class="job-title">Smart Fitness Watch</div>
+        <div class="job-company"><i class="fas fa-store"></i> FitLife Dropship</div>
+        <div class="job-meta">
+          <span><i class="fas fa-box"></i> 80 units</span>
+          <span><i class="fas fa-truck"></i> 2–4 days</span>
+        </div>
+        <div class="job-price">$32 <small>job fee</small></div>
+        <button class="pay-btn" data-job="Smart Fitness Watch" data-fee="32"><i class="fas fa-lock"></i> Pay & get job</button>
+      </div>
+
+      <!-- card 3 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-mobile-alt"></i></div>
+          <div class="job-badge"><i class="fas fa-rocket"></i> trending</div>
+        </div>
+        <div class="job-title">Phone accessories bundle</div>
+        <div class="job-company"><i class="fas fa-store"></i> GadgetFlow</div>
+        <div class="job-meta">
+          <span><i class="fas fa-box"></i> 220 units</span>
+          <span><i class="fas fa-truck"></i> 4–6 days</span>
+        </div>
+        <div class="job-price">$58 <small>job fee</small></div>
+        <button class="pay-btn" data-job="Phone accessories bundle" data-fee="58"><i class="fas fa-lock"></i> Pay & get job</button>
+      </div>
+
+      <!-- card 4 -->
+      <div class="job-card">
+        <div class="job-header">
+          <div class="job-icon"><i class="fas fa-blender"></i></div>
+          <div class="job-badge"><i class="fas fa-leaf"></i> eco</div>
+        </div>
+        <div class="job-title">Eco-friendly kitchen set</div>
+        <div class="job-company"><i class="fas fa-store"></i> GreenNest</div>
+        <div class="job-meta">
+          <span><i class="fas fa-box"></i> 65 units</span>
+          <span><i class="fas fa-truck"></i> 3–5 days</span>
+        </div>
+        <div class="job-price">$29 <small>job fee</small></div>
+        <button class="pay-btn" data-job="Eco-friendly kitchen set" data-fee="29"><i class="fas fa-lock"></i> Pay & get job</button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-note">
+      <i class="fas fa-shield-alt"></i> Secure payments · 256-bit SSL · Verified dropshipping jobs
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="payment-modal">
+      <div class="modal-header">
+        <h3>Confirm payment</h3>
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="modal-job-title" id="modalJobTitle">
+        <i class="fas fa-briefcase"></i> <span>Wireless Earbuds</span>
+      </div>
+
+      <div class="price-breakdown">
+        <span>Job access fee</span>
+        <span id="modalFee">$45.00</span>
+      </div>
+      <div class="price-breakdown">
+        <span>Processing</span>
+        <span>$1.50</span>
+      </div>
+      <div class="price-breakdown total">
+        <span>Total due</span>
+        <span id="modalTotal">$46.50</span>
+      </div>
+      <div class="fee-note">
+        <i class="fas fa-info-circle"></i> One-time payment. Job is yours immediately.
+      </div>
+
+      <div class="payment-methods">
+        <div class="method active"><i class="fab fa-cc-visa"></i> Visa</div>
+        <div class="method"><i class="fab fa-cc-mastercard"></i> Master</div>
+        <div class="method"><i class="fab fa-paypal"></i> PayPal</div>
+      </div>
+
+      <button class="pay-action-btn" id="confirmPayBtn">
+        <i class="fas fa-lock"></i> Pay & unlock job
+      </button>
+
+      <div class="secure-badge">
+        <i class="fas fa-shield-alt"></i> 256-bit SSL · instant access
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-message" id="toastMsg">Payment successful! Job unlocked.</div>
+
+  <script>
+    (function() {
+      // DOM elements
+      const modal = document.getElementById('paymentModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const modalJobTitleSpan = document.querySelector('#modalJobTitle span');
+      const modalFee = document.getElementById('modalFee');
+      const modalTotal = document.getElementById('modalTotal');
+      const confirmPayBtn = document.getElementById('confirmPayBtn');
+      const toast = document.getElementById('toastMsg');
+
+      // State
+      let currentJo
